@@ -47,7 +47,8 @@ def app():
         emotion = predict(image)
         
         # Show the result
-        st.write('The emotion detected in the image is:', emotion)
+        result = {'emotion': emotion}
+        return jsonify(result)
 
 if __name__ == '__main__':
     app()
