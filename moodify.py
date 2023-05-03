@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 from keras.models import load_model
 import streamlit as st
-
+import json
 # Load the model
 moodDetector = load_model("moodifyEngine.h5")
 
@@ -48,7 +48,11 @@ def app():
         
         # Show the result
         result = {'emotion': emotion}
-        return jsonify(result)
+        # Convert the result to JSON
+    json_result = json.dumps(result)
+    
+    # Return the JSON string
+    return json_result
 
 if __name__ == '__main__':
     app()
