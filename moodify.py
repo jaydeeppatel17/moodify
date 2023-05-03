@@ -1,9 +1,16 @@
-from keras.models import load_model
 import cv2
-label_dictionary={0:"Angry",1:"Disgust",2:"Fear",3:"Happy",4:"Neutral",5:"Sad",6:"Surprise"}
+import numpy as np
+from keras.models import load_model
+
+label_dictionary = {0:"Angry", 1:"Disgust", 2:"Fear", 3:"Happy", 4:"Neutral", 5:"Sad", 6:"Surprise"}
+
+# Load the model
 moodDetector = load_model("moodifyEngine.h5")
+
+# Load the image
 img = cv2.imread('sadladki.jpg')
-# img = cv2.imread('/content/Dataset/FER_2013/test/surprise/PrivateTest_10089743.jpg')
+
+# Define a function to reshape and rotate the image
 def reshape_and_rotate(image):
     W = 48
     H = 48
@@ -18,7 +25,7 @@ resized = cv2.resize(gray, (48, 48))
 normalized = resized / 255.0
 n = reshape_and_rotate(normalized)
 input_data = n.reshape((1,48,48))
-print(moodDetector.predict(input_data))
+
 # Make prediction
 prediction = np.argmax(moodDetector.predict(input_data), axis=-1)
 
@@ -26,6 +33,6 @@ prediction = np.argmax(moodDetector.predict(input_data), axis=-1)
 print("The predicted emotion is:", label_dictionary.get(prediction[0]))
 
 # Show image
-cv2_imshow(img)
+cv2.imshow("Image", img)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
