@@ -47,7 +47,7 @@ def app():
         result = predict(image)
         # Convert the result to JSON
         json_result = json.dumps(result)
-    
+        print(json_result)
     # Return the JSON string
         return json_result
 
