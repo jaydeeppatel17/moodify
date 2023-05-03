@@ -48,6 +48,6 @@ def app():
         
         # Show the result
         result = {'emotion': emotion}
-        return jsonify(result)
+        return result
 if __name__ == '__main__':
     app()
