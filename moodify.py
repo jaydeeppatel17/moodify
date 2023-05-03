@@ -46,8 +46,7 @@ def app():
         # Make a prediction using the Flask code
         emotion = predict(image)
         
-        # Show the result
-        result = {'emotion': emotion}
-        return result
+         # Show the result
+        st.write('The emotion detected in the image is:', emotion)
 if __name__ == '__main__':
     app()
