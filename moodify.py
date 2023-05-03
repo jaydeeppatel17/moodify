@@ -10,14 +10,7 @@ moodDetector = load_model("moodifyEngine.h5")
 # Load the image
 img = cv2.imread('sadladki.jpg')
 
-# Define a function to reshape and rotate the image
-def reshape_and_rotate(image):
-    W = 48
-    H = 48
-    image = image.reshape(W, H)
-    image = np.flip(image, axis=1)
-    image = np.rot90(image)
-    return image
+
 
 # Preprocess image
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
