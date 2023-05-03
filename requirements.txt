@@ -3,3 +3,5 @@ numpy
 matplotlib
 Pillow
 opencv-python-headless
+flask
+cv2
