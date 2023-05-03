@@ -46,10 +46,10 @@ def app():
         # Make a prediction using the Flask code
         result = predict(image)
         # Convert the result to JSON
-    json_result = json.dumps(result)
+        json_result = json.dumps(result)
     
     # Return the JSON string
-    return json_result
+        return json_result
 
 if __name__ == '__main__':
     app()
