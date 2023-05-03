@@ -33,6 +33,4 @@ prediction = np.argmax(moodDetector.predict(input_data), axis=-1)
 print("The predicted emotion is:", label_dictionary.get(prediction[0]))
 
 # Show image
-cv2.imshow("Image", img)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+
