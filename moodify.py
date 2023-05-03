@@ -44,10 +44,7 @@ def app():
         image = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
         
         # Make a prediction using the Flask code
-        emotion = predict(image)
-        
-        # Show the result
-        result = {'emotion': emotion}
+      result = predict(image)
         # Convert the result to JSON
     json_result = json.dumps(result)
     
