@@ -2,7 +2,7 @@ from keras.models import load_model
 import cv2
 from google.colab.patches import cv2_imshow
 label_dictionary={0:"Angry",1:"Disgust",2:"Fear",3:"Happy",4:"Neutral",5:"Sad",6:"Surprise"}
-moodDetector = load_model("/content/drive/MyDrive/moodifyEngine.h5")
+moodDetector = load_model("moodifyEngine.h5")
 img = cv2.imread('/content/exp.jpeg')
 # img = cv2.imread('/content/Dataset/FER_2013/test/surprise/PrivateTest_10089743.jpg')
 def reshape_and_rotate(image):
