@@ -5,4 +5,3 @@ Pillow
 opencv-python-headless
 flask
 streamlit
-
