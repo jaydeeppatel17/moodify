@@ -2,8 +2,7 @@ from flask import Flask, request, jsonify
 import cv2
 import numpy as np
 from keras.models import load_model
-
-app = Flask(__name__)
+import streamlit as st
 
 # Load the model
 moodDetector = load_model("moodifyEngine.h5")
@@ -18,15 +17,8 @@ def preprocess_image(image):
     normalized = resized / 255.0
     return normalized.reshape((1,48,48,1))
 
-# Define the prediction route
-@app.route('/predict', methods=['POST'])
-def predict():
-    # Get the image file from the request
-    file = request.files['image']
-    
-    # Read the image as a numpy array
-    image = cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_COLOR)
-    
+# Define the prediction function
+def predict(image):
     # Preprocess the image
     input_data = preprocess_image(image)
     
@@ -36,8 +28,26 @@ def predict():
     # Get the corresponding emotion label
     emotion = label_dictionary.get(prediction[0])
     
-    # Return the prediction as a JSON response
-    return jsonify({'emotion': emotion})
+    return emotion
+
+# Define the Streamlit app
+def app():
+    st.title('Moodify Engine')
+    st.write('Upload an image and the Moodify Engine will detect the emotion in the image!')
+    
+    # Create a file uploader
+    uploaded_file = st.file_uploader("Choose an image...", type=['jpg', 'jpeg', 'png'])
+    
+    if uploaded_file is not None:
+        # Read the image as a numpy array
+        file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
+        image = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
+        
+        # Make a prediction using the Flask code
+        emotion = predict(image)
+        
+        # Show the result
+        st.write('The emotion detected in the image is:', emotion)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app()
