@@ -69,3 +69,6 @@ def st_app():
         
         # Show the result
         st.write('The emotion detected in the image is:', prediction["emotion"])
+if __name__ == '__main__':  
+        # Run the Streamlit app
+        st_app()
