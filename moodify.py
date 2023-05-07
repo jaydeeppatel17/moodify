@@ -66,7 +66,7 @@ def st_app():
         # Upload the image to the FastAPI server
         response = requests.post("https://jaydeeppatel17-moodify-moodify-b5krrb.streamlit.app/", files={"file": uploaded_file})
         prediction = json.loads(response.content.decode('utf-8'))
-        
+        st.write('The emotion detected in the image is:', emotion)
         # Show the result
         st.write('The emotion detected in the image is:', prediction["emotion"])
 if __name__ == '__main__':  
