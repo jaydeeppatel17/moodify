@@ -1,3 +1,4 @@
+import uvicorn
 import numpy as np
 import cv2
 import requests
@@ -5,7 +6,6 @@ import json
 import io
 from fastapi import FastAPI, File, UploadFile
 from keras.models import load_model
-import streamlit as st
 
 # Load the model
 moodDetector = load_model("moodifyEngine.h5")
@@ -33,6 +33,23 @@ def predict(image):
     
     return emotion
 
+# Define the FastAPI app
+app = FastAPI()
+
+# Define a route to handle file upload
+@app.post("/")
+async def predict(file: UploadFile = File(...)):
+    # Read the image as a bytes object
+    contents = await file.read()
+    image = np.asarray(bytearray(contents), dtype=np.uint8)
+    image = cv2.imdecode(image, cv2.IMREAD_COLOR)
+    
+    # Make a prediction using the Flask code
+    emotion = predict(image)
+    
+    # Return the prediction as JSON
+    return {"emotion": emotion}
+
 # Define the Streamlit app
 def st_app():
     st.title('Moodify Engine')
@@ -52,6 +69,3 @@ def st_app():
         
         # Show the result
         st.write('The emotion detected in the image is:', prediction["emotion"])
-
-# Run the Streamlit app
-st_app()
