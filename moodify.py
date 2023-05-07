@@ -3,6 +3,8 @@ import numpy as np
 from keras.models import load_model
 import streamlit as st
 import json
+from flask import Flask, jsonify, request
+
 # Load the model
 moodDetector = load_model("moodifyEngine.h5")
 
@@ -29,8 +31,25 @@ def predict(image):
     
     return emotion
 
+# Define the Flask app
+app = Flask(__name__)
+
+# Define an endpoint for receiving API requests
+@app.route('/predict', methods=['POST'])
+def predict_api():
+    # Read the image file from the request
+    file = request.files['image']
+    image = cv2.imdecode(np.frombuffer(file.read(), np.uint8), cv2.IMREAD_COLOR)
+    
+    # Make a prediction using the prediction function
+    emotion = predict(image)
+    
+    # Return the prediction result as a JSON response
+    result = {'emotion': emotion}
+    return jsonify(result)
+
 # Define the Streamlit app
-def app():
+def main():
     st.title('Moodify Engine')
     st.write('Upload an image and the Moodify Engine will detect the emotion in the image!')
     
@@ -42,10 +61,11 @@ def app():
         file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
         image = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
         
-        # Make a prediction using the Flask code
+        # Make a prediction using the prediction function
         emotion = predict(image)
         
-         # Show the result
+        # Show the result
         st.write('The emotion detected in the image is:', emotion)
+
 if __name__ == '__main__':
-    app() 
+    main()
