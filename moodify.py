@@ -5,6 +5,7 @@ import requests
 import json
 import io
 from fastapi import FastAPI, File, UploadFile
+from keras.models import load_model
 
 # Load the model
 moodDetector = load_model("moodifyEngine.h5")
