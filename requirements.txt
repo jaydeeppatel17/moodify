@@ -7,3 +7,4 @@ flask
 streamlit
 uvicorn[standard]
 fastapi
+python-multipart
