@@ -68,4 +68,4 @@ def main():
         st.write('The emotion detected in the image is:', emotion)
 
 if __name__ == '__main__':
-    main()
+    app.run() 
