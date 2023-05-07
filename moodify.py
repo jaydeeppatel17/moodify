@@ -47,7 +47,7 @@ def st_app():
         image = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
         
         # Upload the image to the FastAPI server
-        response = requests.post("https://your-app-name.streamlit.io/predict", files={"file": uploaded_file})
+        response = requests.post("https://jaydeeppatel17-moodify-moodify-b5krrb.streamlit.app/", files={"file": uploaded_file})
         prediction = json.loads(response.content.decode('utf-8'))
         
         # Show the result
