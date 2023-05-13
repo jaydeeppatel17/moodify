@@ -11,10 +11,15 @@ moodDetector = load_model("moodifyEngine.h5")
 # Define a dictionary to map class indices to emotion labels
 label_dictionary = {0: "Angry", 1: "Disgust", 2: "Fear", 3: "Happy", 4: "Neutral", 5: "Sad", 6: "Surprise"}
 
+#harcascade Code 
+face_detector = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 # Define a helper function to preprocess the image
 def preprocess_image(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    resized = cv2.resize(gray, (48, 48))
+    faces = face_detector.detectMultiScale(gray, 1.3, 5)
+    x,y,w,h = faces[0]
+    cropped = gray[y:y+h,x:x+w]
+    resized = cv2.resize(cropped, (48, 48))
     normalized = resized / 255.0
     return normalized.reshape((1,48,48,1))
 
